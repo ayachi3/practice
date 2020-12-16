@@ -1,0 +1,63 @@
+#include <stdio.h>
+void read(int array[], int length) {
+	for (int i = 0; i < length;  ++ i) {
+		scanf("%d", &array[i]);
+	}
+}
+#include <stdio.h>
+int maxPriceStore[10000] = { 0 };
+
+int max(int a, int b) {
+	if (a > b)
+		return a;
+	return b;
+}
+int knapsack(int prices[], int weights[], int maxWeight) {
+	int maxTotal = 0;
+	int match = 0;
+	int minor = 0;
+	if (maxWeight < 0) {
+		printf("error\n");
+		return 0;
+	}
+	if (maxWeight == 0) {
+		//printf("error2!\n");
+		return 0;
+	}
+	if (maxPriceStore[maxWeight] != 0) {
+		return maxPriceStore[maxWeight];
+	}
+	for (int i = 0; i < 10; i++) {
+		*if (maxWeight >= weights[i]) {
+			maxTotal = max(maxTotal, max(knapsack(prices, weights, maxWeight - 1),
+				knapsack(prices, weights, maxWeight - weights[i]) + prices[i]));
+			match++;
+			if (knapsack(prices, weights, maxWeight - 1) <= knapsack(prices, weights, maxWeight - weights[i]) + prices[i]){
+			minor++;
+		//if (maxWeight >= weights[i]) {
+			//maxTotal = max(maxTotal, knapsack(prices, weights, maxWeight - weights[i]) + prices[i]);
+		//}
+		
+		
+	/*	if (minor == match)
+			printf("equal\n");
+		if (minor > match)
+			printf("minor(error)\n");
+		if (minor ==0)
+			printf("有用！\n");*/
+
+	}
+	maxPriceStore[maxWeight] = maxTotal;
+	return maxTotal;
+}
+
+int main() {
+	int prices[10];
+	read(prices, 10);
+	int weights[10];
+	read(weights, 10);
+	int maxWeight;
+	scanf("%d", &maxWeight);
+	
+	printf("%d", knapsack(prices, weights, maxWeight)); 
+}
