@@ -1,0 +1,56 @@
+#include <stdio.h>
+#define size 10
+//int maxPriceStore[100] = { 0 };
+int max(int a, int b) {
+	if (a > b)
+		return a;
+	return b;
+}
+
+int findMaxValue(int prices[], int weights[], int maxWeight, int objectStatus[]) {
+	int statusReceive[10] = { 0 };
+	for (int i = 0; i < 10; i++) {
+		statusReceive[i] = objectStatus[i];
+	}
+	int maxTotal = 0;
+	if (maxWeight < 0) {
+		printf("error\n");
+		return 0;
+	}
+	if (maxWeight == 0) {
+		return 0;
+	}
+	//if (maxPriceStore[maxWeight] != 0) {
+		//return maxPriceStore[maxWeight];
+	//}
+	for (int i = 0; i < 10; i++) {
+		if (maxWeight >= weights[i] && statusReceive[i] == 0) {
+			statusReceive[i] = 1;
+			maxTotal = max(maxTotal,
+				findMaxValue(prices, weights, maxWeight - weights[i], statusReceive) + prices[i]);
+		}
+	}
+	//maxPriceStore[maxWeight] = maxTotal;
+	return maxTotal;
+}
+void read(int array[], int length) {
+	for (int i = 0; i < length; ++i) {
+		scanf("%d", &array[i]);
+	}
+}
+int knapsack(int prices[], int weights[], int maxWeight) {
+	int objectStatus[size] = { 0 };
+	int max = 0;
+	max=findMaxValue(prices, weights, maxWeight, objectStatus);
+	return max;
+}
+int main() {
+	int prices[size];
+	read(prices, size);
+	int weights[size];
+	read(weights, size);
+	int maxWeight;
+	scanf("%d", &maxWeight);
+
+	printf("%d", knapsack(prices, weights, maxWeight));
+}
